@@ -1,3 +1,4 @@
+import { IFilme } from '../models/IFilme.model';
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
@@ -8,6 +9,30 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+
+  titulo: string = 'Videos';
+
+
+  listaVideos: IFilme[] = [
+    {
+      nome: 'Teste',
+      lancamento: '15/04/2021',
+      duracao: '1h 50m',
+      classificacao: 76,
+      cartaz: 'https://www.themoviedb.org/t/p/w1280/mQ9cyw1gfpK1M3a69cgXFHvWkih.jpg',
+      generos: ['Ação','Fixão']
+
+    },
+    {
+      nome: 'Teste',
+      lancamento: '15/04/2021',
+      duracao: '1h 50m',
+      classificacao: 76,
+      cartaz: 'https://www.themoviedb.org/t/p/w1280/mQ9cyw1gfpK1M3a69cgXFHvWkih.jpg',
+      generos: ['Terror','Romance']
+    }
+
+  ];
 
   constructor(public alertController: AlertController, public toastController: ToastController) {
 

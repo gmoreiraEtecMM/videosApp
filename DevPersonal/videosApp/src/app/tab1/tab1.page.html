@@ -1,51 +1,33 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="dark ">
     <ion-title>
-        Videos App
+      {{ titulo }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="light">
-  <ion-searchbar placeholder="Procurarq"></ion-searchbar>
+  <ion-searchbar placeholder="Buscar"></ion-searchbar>
 
   <ion-list>
-  <ion-item-sliding>
+  <ion-item-sliding *ngFor= "let filme of listaVideos">
     <ion-item lines="full">
-      <ion-thumbnail slot="end">
-        <img src="https://www.themoviedb.org/t/p/w1280/w8Hi3GI4q1oR6EImrDWrAQFn8Ha.jpg">
+      <ion-thumbnail slot="start">
+        <img [src]="filme.cartaz" />
       </ion-thumbnail>
+
       <ion-label class="ion-text-wrap">
-        <h1>teste</h1>
-        <p>Duração:</p>
-        <p>Generos:</p>
+        <div>
+          <h1>{{filme.nome}}</h1>
+          <p>{{filme.lancamento}} - {{filme.duracao}}</p>
+          <ion-badge color="light" *ngFor="let genero of filme.generos">{{genero}}</ion-badge>
+        </div>
+
       </ion-label>
       <ion-chip color="success" outline>
-        <ion-label>76%</ion-label>
+        <ion-label>{{filme.classificacao}}%</ion-label>
       </ion-chip>
     </ion-item>
-
-    <ion-item-options side="end">
-      <ion-item-option color="azul" (click)="exibirAlertaFavorito()">
-        <ion-item slot="icon-only" name="star"></ion-item>
-      </ion-item-option>
-    </ion-item-options>
-  </ion-item-sliding>
-  <ion-item-sliding>
-    <ion-item lines="full">
-      <ion-thumbnail slot="end">
-        <img src="https://www.themoviedb.org/t/p/w1280/w8Hi3GI4q1oR6EImrDWrAQFn8Ha.jpg">
-      </ion-thumbnail>
-      <ion-label class="ion-text-wrap">
-        <h1>teste</h1>
-        <p>Duração:</p>
-        <p>Generos:</p>
-      </ion-label>
-      <ion-chip color="success" outline>
-        <ion-label>76%</ion-label>
-      </ion-chip>
-    </ion-item>
-
     <ion-item-options side="end">
       <ion-item-option color="azul" (click)="exibirAlertaFavorito()">
         <ion-item slot="icon-only" name="star"></ion-item>
