@@ -4,6 +4,9 @@ import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { DadosService } from '../services/dados.service';
 import { Router } from '@angular/router';
+import { FilmeService } from '../services/filme.service';
+import { IListaFilmes, IFilmeApi } from '../models/IFilmeAPI.model';
+import { GeneroService } from '../services/genero.service';
 
 @Component({
   selector: 'app-tab1',
@@ -12,12 +15,11 @@ import { Router } from '@angular/router';
 })
 export class Tab1Page {
 
-  titulo: string = 'Videos';
-
+  titulo = 'Filmes';
 
   listaVideos: IFilme[] = [
     {
-      nome: 'A guerra dos tronos'
+      nome: 'A guerra dos tronos',
       lancamento: '11/02/2018',
       duracao: '1h 50m',
       classificacao: 45,
@@ -65,15 +67,30 @@ export class Tab1Page {
 
   ];
 
+  listaFilmes: IListaFilmes;
+
+  generos: string[] = [];
+
   constructor(
     public alertController: AlertController,
     public toastController: ToastController,
     public dadosService: DadosService,
-    public route: Router) {
+    public filmeServices: FilmeService,
+    public generoService: GeneroService,
+    public route: Router) {  }
 
+  buscarFilmes(evento: any){
+    console.log(evento.target.value);
+    const busca = evento.target.value;
+    if(busca && busca.trim() !== ''){
+      this.filmeServices.buscarFilmes(busca).subscribe(dados => {
+          console.log(dados);
+          this.listaFilmes = dados;
+      });
+    }
   }
 
-  exibirFilme(filme: IFilme){
+  exibirFilme(filme: IFilmeApi){
     this.dadosService.guardarDados('filme', filme);
     this.route.navigateByUrl('/dados-filme');
   }
@@ -110,6 +127,19 @@ export class Tab1Page {
       color: 'success'
     });
     toast.present();
+  }
+
+  ngOnInit(){
+    this.generoService.buscarGeneros().subscribe(dados => {
+      console.log('Generos', dados.genres);
+      dados.genres.forEach(genero => {
+        this.generos[genero.id] = genero.name;
+      });
+
+      this.dadosService.guardarDados('generos', this.generos);
+
+    });
+
   }
 
 }
