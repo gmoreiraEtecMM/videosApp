@@ -28,6 +28,10 @@ export class LoginPage implements OnInit {
     }
   }
 
+  registroUsuario(){
+    this.route.navigateByUrl('/registro/usuario');
+  }
+
   async presentToast(texto: string, cor: string) {
     const toast = await this.toastController.create({
       message: texto,
